@@ -1,4 +1,4 @@
-module AutomotiveDrivingModels 
+module AutomotiveDrivingModels
 
 using Printf
 using LinearAlgebra
@@ -6,16 +6,17 @@ using Parameters
 using StaticArrays
 using Distributions
 using Reexport
-@reexport using Vec 
+@reexport using Vec
 @reexport using Records
 
 # Roadways
+include("roadways/straight_1d_roadways.jl")
 
 export StraightRoadway,
        mod_position_to_roadway,
        get_headway
-       
-include("roadways/straight_1d_roadways.jl")
+
+include("roadways/curves.jl")
 
 export CurvePt,
        Curve,
@@ -27,9 +28,8 @@ export CurvePt,
        get_curve_index,
        curveindex_end
 
-include("roadways/curves.jl")
 
-export     
+export
     LaneTag,
     LaneBoundary,
     Lane,
@@ -69,7 +69,7 @@ export
 
 include("roadways/roadways.jl")
 
-export 
+export
     Frenet,
     get_posG,
     NULL_FRENET
@@ -183,7 +183,7 @@ export
 include("feature-extraction/neighbors_features.jl")
 include("feature-extraction/lane_features.jl")
 
-export 
+export
     AbstractFeature,
     FeatureValue,
     FeatureState,
@@ -215,7 +215,7 @@ export
 
 include("feature-extraction/lidar_sensor.jl")
 
-## Actions 
+## Actions
 
 export
     propagate,
@@ -246,6 +246,7 @@ export
 
 include("behaviors/interface.jl")
 
+
 export
     LaneFollowingDriver,
     StaticLaneFollowingDriver,
@@ -266,21 +267,28 @@ export
     DIR_MIDDLE,
     DIR_LEFT,
     MOBIL,
-    TimLaneChanger
+    TimLaneChanger,
+    BafflingDriver,
+    BafflingLongitudinalTracker,
+    BafflingLaneChanger
 
-include("behaviors/lane_following_drivers.jl")
-include("behaviors/princeton_driver.jl")
-include("behaviors/speed_trackers.jl")
-include("behaviors/intelligent_driver_model.jl")
-include("behaviors/lateral_driver_models.jl")
-include("behaviors/lane_change_models.jl")
-include("behaviors/MOBIL.jl")
-include("behaviors/tim_lane_changer.jl")
-include("behaviors/lat_lon_separable_driver.jl")
-include("behaviors/tim_2d_driver.jl")
-include("behaviors/sidewalk_pedestrian_model.jl")
+    include("behaviors/lane_following_drivers.jl")
+    include("behaviors/princeton_driver.jl")
+    include("behaviors/speed_trackers.jl")
+    include("behaviors/intelligent_driver_model.jl")
+    include("behaviors/lateral_driver_models.jl")
+    include("behaviors/lane_change_models.jl")
+    include("behaviors/MOBIL.jl")
+    include("behaviors/tim_lane_changer.jl")
+    include("behaviors/lat_lon_separable_driver.jl")
+    include("behaviors/tim_2d_driver.jl")
+    include("behaviors/sidewalk_pedestrian_model.jl")
+    include("behaviors/baffling_drivers.jl")
+    include("behaviors/baffling_longitudinal_tracker.jl")
+    include("behaviors/baffling_lane_changer.jl")
 
-export 
+
+export
     get_actions!,
     tick!,
     reset_hidden_states!,
