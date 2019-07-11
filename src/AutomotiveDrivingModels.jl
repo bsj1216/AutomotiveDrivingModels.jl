@@ -4,10 +4,22 @@ using Printf
 using LinearAlgebra
 using Parameters
 using StaticArrays
-using Distributions
 using Reexport
+
 @reexport using Vec
 @reexport using Records
+
+@reexport using AutoViz
+@reexport using Distributions
+@reexport using Interact
+
+# for mpc sgan model
+# using Random
+# using JuMP
+# using Ipopt
+# using PyCall
+
+
 
 # Roadways
 include("roadways/straight_1d_roadways.jl")
@@ -119,6 +131,12 @@ export
     get_rear
 
 include("states/vehicle_state.jl")
+
+# export
+    # VehicleStateBuffer
+
+# include("states/vehicle_state_buffer.jl")
+
 
 export
     TrajdataFrame,
@@ -254,6 +272,7 @@ export
     IntelligentDriverModel,
     ProportionalSpeedTracker,
     track_longitudinal!,
+    track_lateral!,
     LateralDriverModel,
     ProportionalLaneTracker,
     LatLonSeparableDriver,
@@ -267,10 +286,12 @@ export
     DIR_MIDDLE,
     DIR_LEFT,
     MOBIL,
-    TimLaneChanger,
-    BafflingDriver,
-    BafflingLongitudinalTracker,
-    BafflingLaneChanger
+    TimLaneChanger
+    # BafflingDriver,
+    # BafflingLongitudinalTracker,
+    # BafflingLaneChanger
+    # NNMPCdriver,
+    # set_other_models!
 
     include("behaviors/lane_following_drivers.jl")
     include("behaviors/princeton_driver.jl")
@@ -283,9 +304,10 @@ export
     include("behaviors/lat_lon_separable_driver.jl")
     include("behaviors/tim_2d_driver.jl")
     include("behaviors/sidewalk_pedestrian_model.jl")
-    include("behaviors/baffling_drivers.jl")
-    include("behaviors/baffling_longitudinal_tracker.jl")
-    include("behaviors/baffling_lane_changer.jl")
+    # include("behaviors/baffling_drivers.jl")
+    # include("behaviors/baffling_longitudinal_tracker.jl")
+    # include("behaviors/baffling_lane_changer.jl")
+    # include("behaviors/mpc_sgan_monte_driver.jl")
 
 
 export

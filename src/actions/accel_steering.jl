@@ -35,10 +35,12 @@ propagate vehicle forward in time given a desired acceleration and
 steering angle. If steering angle higher than 0.1 radian, the vehicle
 drives in a circle
 """
-function propagate(veh::Entity{VehicleState, BicycleModel, Int}, action::AccelSteeringAngle, roadway::Roadway, Δt::Float64)
-
-    L = veh.def.a + veh.def.b
-    l = -veh.def.b
+function propagate(veh::Entity{VehicleState, D, I}, action::AccelSteeringAngle, roadway::Roadway, Δt::Float64) where {D, I}
+    a = 1.5; b = 1.5
+    # L = veh.def.a + veh.def.b
+    # l = -veh.def.b
+    L = a+b
+    l = -b
 
     a = action.a # accel [m/s²]
     δ = action.δ # steering wheel angle [rad]

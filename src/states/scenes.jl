@@ -1,9 +1,9 @@
 """
-    Scene 
+    Scene
 
 A Scene is a specific instance of the Frame type defined in Records. It represents a collection of vehicles at a given time.
 
-# Constructors 
+# Constructors
     - `Scene(n::Int=100)`
     - `Scene(arr::Vector{Vehicle})`
 """

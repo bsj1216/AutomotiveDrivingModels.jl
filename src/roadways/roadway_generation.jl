@@ -1,9 +1,9 @@
 """
-    gen_straight_curve(A::VecE2{T}, B::VecE2{T}, nsamples::Integer) where T<:Real 
+    gen_straight_curve(A::VecE2{T}, B::VecE2{T}, nsamples::Integer) where T<:Real
 Returns a `Curve` corresponding to a straight line between A and B. `nsamples` indicates the
 number of points to place between A and B, if set to two, the curve will only contains A and B.
 """
-function gen_straight_curve(A::VecE2{T}, B::VecE2{T}, nsamples::Integer) where T<:Real 
+function gen_straight_curve(A::VecE2{T}, B::VecE2{T}, nsamples::Integer) where T<:Real
 
     θ = atan(B-A)
     δ = norm(B-A)/(nsamples-1)
@@ -63,9 +63,9 @@ Vec.lerp(A::VecE2{T}, B::VecE2{T}, C::VecE2{T}, D::VecE2{T}, t::T) where T<:Real
 """
     gen_bezier_curve(A::VecSE2{T}, B::VecSE2{T}, rA::T, rB::T, nsamples::Int) where T <: Real
 Generate a Bezier curve going from A to B with radii specified by rA and rB. It uses cubic
-interpolation. `nsamples` specifies the number of point along the curve between A and B. The more 
+interpolation. `nsamples` specifies the number of point along the curve between A and B. The more
 points, the more accurate the approximation is.
-This is useful to generate arcs. 
+This is useful to generate arcs.
 """
 function gen_bezier_curve(A::VecSE2{T}, B::VecSE2{T}, rA::T, rB::T, nsamples::Int) where T <: Real
 
@@ -125,7 +125,7 @@ Generate a roadway that is a rectangular racetrack with rounded corners.
     radius = turn radius [m]
 
       ______________________
-     /                      \\ 
+     /                      \\
     |                        |
     |                        |
     \\______________________/

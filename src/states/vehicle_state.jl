@@ -1,9 +1,9 @@
 """
-    VehicleState 
+    VehicleState
 A default type to represent an agent physical state (position, velocity).
 It contains the position in the global frame, Frenet frame and the longitudinal velocity
 # constructors
-    VehicleState(posG::VecSE2{Float64}, v::Float64) 
+    VehicleState(posG::VecSE2{Float64}, v::Float64)
     VehicleState(posG::VecSE2{Float64}, roadway::Roadway, v::Float64)
     VehicleState(posG::VecSE2{Float64}, lane::Lane, roadway::Roadway, v::Float64)
     VehicleState(posF::Frenet, roadway::Roadway, v::Float64)
@@ -55,12 +55,12 @@ function Vec.lerp(a::VehicleState, b::VehicleState, t::Float64, roadway::Roadway
 end
 
 """
-    get_vel_s(s::VehicleState) 
+    get_vel_s(s::VehicleState)
 returns the longitudinal velocity (along the lane)
 """
 get_vel_s(s::VehicleState) = s.v * cos(s.posF.ϕ) # velocity along the lane
 """
-    get_vel_t(s::VehicleState) 
+    get_vel_t(s::VehicleState)
 returns the lateral velocity (⟂ to lane)
 """
 get_vel_t(s::VehicleState) = s.v * sin(s.posF.ϕ) # velocity ⟂ to lane
@@ -89,7 +89,7 @@ end
 
 """
     Vehicle
-A specific instance of the Entity type defined in Records to represent Vehicles with 
+A specific instance of the Entity type defined in Records to represent Vehicles with
 state `VehicleState` , definition `VehicleDef` and id `Int64`
 """
 const Vehicle = Entity{VehicleState,VehicleDef,Int64}

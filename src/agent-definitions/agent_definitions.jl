@@ -1,25 +1,25 @@
 """
     AbstractAgentDefinition
-An Agent definition represents static parameters characterizing an agent, 
+An Agent definition represents static parameters characterizing an agent,
 such as its physical dimensions.
 """
 abstract type AbstractAgentDefinition end
 
 """
     length(def::AbstractAgentDefinition)
-return the length of the vehicle 
+return the length of the vehicle
 """
 Base.length(def::AbstractAgentDefinition) = error("length not implemented for agent definition of type $(typeof(def))")
 
 """
     width(def::AbstractAgentDefinition)
-return the width of the vehicle 
+return the width of the vehicle
 """
 width(def::AbstractAgentDefinition) = error("width not implemented for agent definition of type $(typeof(def))")
 
 """
     class(def::AbstractAgentDefinition)
-return the class of the vehicle 
+return the class of the vehicle
 """
 class(def::AbstractAgentDefinition) = error("width not implemented for agent definition of type $(typeof(def))")
 
@@ -81,7 +81,7 @@ end
     BicycleModel(def::VehicleDef; a::Float64 = 1.5, b::Float64 = 1.5)
 Vehicle definition representing the bicycle model
 
-# Fields 
+# Fields
 - `def::VehicleDef`
 - `a::Float64` distance between cg and front axle [m]
 - `b::Float64` distance between cg and rear axle [m]
@@ -93,8 +93,7 @@ struct BicycleModel <: AbstractAgentDefinition
 end
 function BicycleModel(def::VehicleDef;
     a::Float64 = 1.5,
-    b::Float64 = 1.5,
-    )
+    b::Float64 = 1.5)
 
     return BicycleModel(def, a, b)
 end

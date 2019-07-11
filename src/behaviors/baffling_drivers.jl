@@ -16,6 +16,7 @@ mutable struct BafflingDriver <: DriverModel{LatLonAccel}
     mlon::LaneFollowingDriver
     mlat::LateralDriverModel
     mlane::LaneChangeModel
+    ΔT::Float64
 
     function BafflingDriver(
         timestep::Float64;
@@ -31,29 +32,30 @@ mutable struct BafflingDriver <: DriverModel{LatLonAccel}
         retval.mlon = mlon
         retval.mlat = mlat
         retval.mlane = mlane
+        retval.ΔT = timestep
 
         retval
     end
 end
 get_name(::BafflingDriver) = "BafflingDriver"
-function set_desired_speed!(model::BafflingDriver, v_des::Float64)
+function AutomotiveDrivingModels.set_desired_speed!(model::BafflingDriver, v_des::Float64)
     set_desired_speed!(model.mlon, v_des)
     set_desired_speed!(model.mlane, v_des)
     model
 end
-function track_longitudinal!(driver::LaneFollowingDriver, scene::Scene, roadway::Roadway, vehicle_index::Int, fore::NeighborLongitudinalResult)
-    v_ego = scene[vehicle_index].state.v
-    if fore.ind != nothing
-        headway, v_oth = fore.Δs, scene[fore.ind].state.v
-    else
-        headway, v_oth = NaN, NaN
-    end
-    return track_longitudinal!(driver, v_ego, v_oth, headway)
-end
-function observe!(driver::BafflingDriver, scene::Scene, roadway::Roadway, egoid::Int)
+# function track_longitudinal!(driver::LaneFollowingDriver, scene::Scene, roadway::Roadway, vehicle_index::Int, fore::NeighborLongitudinalResult)
+#     v_ego = scene[vehicle_index].state.v
+#     if fore.ind != nothing
+#         headway, v_oth = fore.Δs, scene[fore.ind].state.v
+#     else
+#         headway, v_oth = NaN, NaN
+#     end
+#     return track_longitudinal!(driver, v_ego, v_oth, headway)
+# end
+function AutomotiveDrivingModels.observe!(driver::BafflingDriver, scene::Scene, roadway::Roadway, egoid::Int)
 
     update!(driver.rec, scene)
-    observe!(driver.mlane, scene, roadway, egoid)
+    observe!(driver.mlane, scene, roadway, egoid) # receive action from the lane change controller
 
     vehicle_index = findfirst(egoid, scene)
     lane_change_action = rand(driver.mlane)
@@ -69,8 +71,8 @@ function observe!(driver::BafflingDriver, scene::Scene, roadway::Roadway, egoid:
         fore = get_neighbor_fore_along_right_lane(scene, vehicle_index, roadway, VehicleTargetPointFront(), VehicleTargetPointRear(), VehicleTargetPointFront())
     end
 
-    track_lateral!(driver.mlat, laneoffset, lateral_speed)
-    track_longitudinal!(driver.mlon, scene, roadway, vehicle_index, fore)
+    track_longitudinal!(driver.mlon, scene, roadway, vehicle_index, fore) # receive acceleration from the longitudinal controller
+    track_lateral!(driver.mlat, laneoffset, lateral_speed) # receive acceleration from the lateral controller
 
     driver
 end
